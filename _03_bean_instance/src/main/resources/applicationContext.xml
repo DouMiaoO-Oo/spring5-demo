@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        bean标签标示配置bean
+            id属性标示给bean起名字
+            class属性表示给bean定义类型
+            name:为bean指定别名，别名可以有多个，使用逗号，分号，空格进行分隔
+            scope表示bean设置作用范围，可选值为单例 singleton，非单例 prototype. 默认情况下是单例的
+    -->
+
+    <!--方式一：构造方法实例化bean-->
+        <bean id="bookDao" class="org.example.dao.impl.BookDaoImpl"/>
+
+    <!--方式二：使用静态工厂实例化bean-->
+        <bean id="orderDao" class="org.example.factory.OrderDaoFactory" factory-method="getOrderDao"/>
+
+    <!--方式三：使用实例工厂实例化bean
+     相比方式二需要先实例化
+    -->
+        <bean id="userFactory" class="org.example.factory.UserDaoFactory"/>
+        <bean id="userDao" factory-method="getUserDao" factory-bean="userFactory"/>
+
+    <!--方式四：使用FactoryBean实例化bean-->
+    <bean id="userDaoByFactoryBean" class="org.example.factory.UserDaoFactoryBean"/>
+</beans>

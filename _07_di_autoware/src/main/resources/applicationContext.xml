@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--autowire属性：开启自动装配，byName使用按名称装配
+    本样例没有使用按名字装配
+    -->
+    <bean id="bookDao" class="org.example.dao.impl.BookDaoImpl" autowire="byName">
+        <property name="databaseName" value="MySQL"/>
+        <property name="ip" value="127.0.0.1"/>
+    </bean>
+
+    <!--autowire属性：开启自动装配，通常使用按类型装配-->
+    <bean id="bookService" name = "service" class="org.example.service.impl.BookServiceImpl" autowire="byType"/>
+</beans>

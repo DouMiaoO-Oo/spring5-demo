@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!--引用 properties 文件 -->
+    <!--system-properties-mode:设置为NEVER,表示不加载系统属性-->
+    <!--classpath*:*.properties不仅可以加载当前项目还可以加载当前项目所依赖的所有项目的根路径下的properties配置文件-->
+    <context:property-placeholder
+            location="classpath*:*.properties"
+            system-properties-mode="NEVER"
+    />
+
+    <!--引用第3方Bean-->
+    <!-- druid 参数是否正确不重要， 获取 datasource时还没有验证参数正确性 -->
+    <bean id="druid_datasource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_db"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <bean id="C3P0_datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+    </bean>
+
+    <bean class="org.example.Utils">
+        <property name="map">
+            <map>
+                <entry key="driverClass" value="${jdbc.driver}"/>
+                <entry key="jdbcUrl" value="${jdbc.url}"/>
+                <entry key="user" value="${jdbc.username}"/>
+                <entry key="password" value="${jdbc.password}"/>
+                <entry key="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+            </map>
+        </property>
+    </bean>
+</beans>
